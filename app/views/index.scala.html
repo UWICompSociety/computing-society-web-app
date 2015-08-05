@@ -1,7 +1,19 @@
-@(message: String)
+<!DOCTYPE html>
 
-@main("Welcome to Play") {
+<html lang="en">
+    <head>
+        <title>Angular Play</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+    </head>
+    <body ng-app="app">
+        <div class="wrapper">
+            <div ui-view></div>
+        </div>
 
-    @play20.welcome(message, style = "Java")
-
-}
+        <script src="@routes.Assets.versioned("/public", "bower_components/jquery/dist/jquery.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("/public", "bower_components/angular/angular.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("/public", "bower_components/angular-ui-router/release/angular-ui-router.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("/public", "app/app.js")" type="text/javascript" ></script>
+    </body>
+</html>

@@ -4,6 +4,10 @@
 
 # Home page
 GET     /                           controllers.Application.index()
+GET     /home                       controllers.Application.index()
+
+# Angular routes
+GET     /templates/*file            controllers.Assets.versioned(path="/public/app/templates", file: Asset)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
