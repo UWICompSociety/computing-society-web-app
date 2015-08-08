@@ -3,11 +3,17 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
-GET     /home                       controllers.Application.index()
+GET        /                         @controllers.Application.index()
+GET        /home                     @controllers.Application.index()
+
+GET        /api/members              @controllers.api.MembersCtrl.index()
+GET        /api/members/:id          @controllers.api.MembersCtrl.show(id: Long)
+
 
 # Angular routes
-GET     /templates/*file            controllers.Assets.versioned(path="/public/app/templates", file: Asset)
+GET        /templates/*file          controllers.Assets.versioned(path="/public/app/templates", file: Asset)
+GET        /controllers/*file        controllers.Assets.versioned(path="/public/app/controllers", file: Asset)
+GET        /directives/*file         controllers.Assets.versioned(path="/public/app/dircetives", file: Asset)
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET        /assets/*file             controllers.Assets.versioned(path="/public", file: Asset)
