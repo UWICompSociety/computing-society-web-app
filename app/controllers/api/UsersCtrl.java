@@ -19,6 +19,7 @@ public class UsersCtrl extends EntityController {
 
         List<User> users = User.find.all();
 
+        // filter verified
         for (User user: users)
             results.add(Json.toJson(user));
 
@@ -30,6 +31,9 @@ public class UsersCtrl extends EntityController {
 
         if (user == null)
             return ok(Json.toJson("User not found"));
+
+        if (!user.isVerified())
+            return ok(Json.toJson("User not verified"));
 
         return ok(Json.toJson(user));
     }

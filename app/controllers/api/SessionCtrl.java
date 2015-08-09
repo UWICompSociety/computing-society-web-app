@@ -86,8 +86,24 @@ public class SessionCtrl extends EntityController {
     }
 
     public Result show() {
+        String email = session().get("email");
 
-        return ok();
+        if (email == null)
+            return ok(Json.toJson("Session does not exist"));
+
+        User user = User.find.where().eq("email", email).findUnique();
+
+        // Something is very wrong if this occurs...
+        if (user == null) {
+            session().clear();
+            return ok(Json.toJson("Error, please re-login"));
+        }
+
+
+        ObjectNode result = Json.newObject();
+        result.pojoNode(user);
+
+        return ok(result);
     }
 
     public Result destroy() {

@@ -20,4 +20,8 @@ public class Address extends BaseEntity {
     @JsonIgnore
     @OneToOne(mappedBy = "address")
     public Profile profile;
+
+    @JsonIgnore
+    @OneToOne
+    public Place place;
 }

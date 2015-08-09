@@ -1,5 +1,6 @@
 package controllers.api;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import controllers.utils.EntityController;
@@ -8,6 +9,7 @@ import models.user_management.Profile;
 import models.user_management.User;
 import play.Logger;
 import play.libs.Json;
+import play.mvc.BodyParser;
 import play.mvc.Result;
 
 import java.util.List;
@@ -17,10 +19,21 @@ import java.util.List;
  */
 public class ContributionsCtrl extends EntityController {
 
+    @BodyParser.Of(BodyParser.Json.class)
     public Result store(long id) {
+        JsonNode request = request().body().asJson();
+        int amount = request.path("amount").asInt();
+
         User user = User.find.byId(id);
 
-        return ok()
+        if (user == null)
+            return ok(Json.toJson("User not found"));
+
+        Contribution contribution = new Contribution(amount);
+        contribution.profile = user.profile;
+        contribution.save();
+
+        return ok(Json.toJson(contribution));
     }
 
     public Result index(long id) {

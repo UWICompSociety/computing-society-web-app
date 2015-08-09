@@ -17,9 +17,13 @@ public class Contribution extends BaseEntity {
     public static Finder<Long, Contribution> find = new Finder<>(Contribution.class);
 
     @Constraints.Required
-    public long amount;
+    public int amount;
 
     @JsonIgnore
     @ManyToOne
     public Profile profile;
+
+    public Contribution(int amount) {
+        this.amount = amount;
+    }
 }

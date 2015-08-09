@@ -10,6 +10,7 @@ GET         /home                                      @controllers.Application.
 POST        /api/login                                 @controllers.api.SessionCtrl.authenticate()
 POST        /api/register                              @controllers.api.SessionCtrl.store()
 GET         /api/logout                                @controllers.api.SessionCtrl.destroy()
+GET         /api/session                               @controllers.api.SessionCtrl.show()
 
 # ===================================================== Users =====================================================
 GET         /api/users                                 @controllers.api.UsersCtrl.index()

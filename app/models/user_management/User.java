@@ -76,4 +76,8 @@ public class User extends BaseEntity {
         }
         return false;
     }
+
+    public boolean isVerified() {
+        return this.verified;
+    }
 }
