@@ -3,17 +3,33 @@
 # ~~~~
 
 # Home page
-GET        /                         @controllers.Application.index()
-GET        /home                     @controllers.Application.index()
+GET         /                                          @controllers.Application.index()
+GET         /home                                      @controllers.Application.index()
 
-GET        /api/members              @controllers.api.MembersCtrl.index()
-GET        /api/members/:id          @controllers.api.MembersCtrl.show(id: Long)
+# ===================================================== Session =====================================================
+POST        /api/login                                 @controllers.api.SessionCtrl.authenticate()
+POST        /api/register                              @controllers.api.SessionCtrl.store()
+GET         /api/logout                                @controllers.api.SessionCtrl.destroy()
 
+# ===================================================== Users =====================================================
+GET         /api/users                                 @controllers.api.UsersCtrl.index()
+GET         /api/users/:id                             @controllers.api.UsersCtrl.show(id: Long)
+
+
+# ===================================================== Member =====================================================
+GET         /api/members                               @controllers.api.MembersCtrl.index()
+GET         /api/members/:id                           @controllers.api.MembersCtrl.show(id: Long)
+POST        /api/members                               @controllers.api.MembersCtrl.store()
+
+# ===================================================== Contribution =====================================================
+GET         /api/members/:id/contributions             @controllers.api.ContributionsCtrl.index(id: Long)
+GET         /api/members/:id/contributions/:num        @controllers.api.ContributionsCtrl.show(id: Long, num: Integer)
+POST        /api/members/:id/contributions              @controllers.api.ContributionsCtrl.store(id: Long)
 
 # Angular routes
-GET        /templates/*file          controllers.Assets.versioned(path="/public/app/templates", file: Asset)
-GET        /controllers/*file        controllers.Assets.versioned(path="/public/app/controllers", file: Asset)
-GET        /directives/*file         controllers.Assets.versioned(path="/public/app/dircetives", file: Asset)
+GET         /templates/*file                           controllers.Assets.versioned(path="/public/app/templates", file: Asset)
+GET         /controllers/*file                         controllers.Assets.versioned(path="/public/app/controllers", file: Asset)
+GET         /directives/*file                          controllers.Assets.versioned(path="/public/app/dircetives", file: Asset)
 
 # Map static resources from the /public folder to the /assets URL path
-GET        /assets/*file             controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file                              controllers.Assets.versioned(path="/public", file: Asset)

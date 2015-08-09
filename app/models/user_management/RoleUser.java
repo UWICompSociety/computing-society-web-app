@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class RoleUser extends BaseModel {
 
+    @JsonIgnore
     @ManyToOne
     public Role role;
 

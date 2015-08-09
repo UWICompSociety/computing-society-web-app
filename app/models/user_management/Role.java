@@ -14,6 +14,8 @@ import java.util.List;
 @Entity
 public class Role extends BaseEntity {
 
+    public static Finder<Long, Role> find = new Finder<>(Role.class);
+
     @Constraints.Required
     public String name;
 
