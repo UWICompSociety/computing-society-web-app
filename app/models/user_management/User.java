@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.utils.BaseEntity;
 import play.data.validation.Constraints;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -20,6 +21,8 @@ public class User extends BaseEntity {
 
     public static Finder<Long, User> find = new Finder<>(User.class);
 
+    @Column(nullable=false)
+    @Constraints.Email
     @Constraints.Required
     public String email;
 

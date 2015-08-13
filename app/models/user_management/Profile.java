@@ -25,7 +25,8 @@ public class Profile extends BaseEntity {
     public String firstName;
 
     public String lastName;
-    public String nickname;
+    public String registrationNumber;
+//    public String nickname;
 
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     public Date birthday;
@@ -47,9 +48,10 @@ public class Profile extends BaseEntity {
         private String firstName;
 
         // optional
-        private String lastName = "";
-        private String nickname = "";
+        private String lastName = null;
+        private String nickname = null;
         private Date birthday = null;
+        private String registrationNumber = null;
 
         public Builder(String firstName) {
             this.firstName = firstName;
@@ -61,6 +63,8 @@ public class Profile extends BaseEntity {
 
         public Builder birthday(Date birthday) { this.birthday = birthday; return this; }
 
+        public Builder registrationNumber(String regNo) { registrationNumber = regNo;   return this; }
+
         public Profile build() { return new Profile(this); }
 
     }
@@ -68,7 +72,8 @@ public class Profile extends BaseEntity {
     private Profile(Builder builder) {
         firstName = builder.firstName;
         lastName = builder.lastName;
-        nickname = builder.nickname;
+//        nickname = builder.nickname;
         birthday = builder.birthday;
+        registrationNumber = builder.registrationNumber;
     }
 }

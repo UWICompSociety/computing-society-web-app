@@ -1,4 +1,4 @@
-package services;
+package services.util;
 
 /**
  * Created by shane on 8/13/15.

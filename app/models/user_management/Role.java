@@ -19,7 +19,18 @@ public class Role extends BaseEntity {
     @Constraints.Required
     public String name;
 
+    public String description;
+
     @JsonIgnore
     @OneToMany(mappedBy = "role")
     public List<RoleUser> users;
+
+    public Role(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    public Role(String name) {
+        this(name, null);
+    }
 }
