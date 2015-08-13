@@ -12,5 +12,5 @@ import play.mvc.Security;
  */
 public abstract class BaseController extends Controller {
     public static final String AUTH_TOKEN_HEADER = "X-AUTH-TOKEN";
-    public static final String TOKEN = "token";
+    public static final String AUTH_TOKEN = "token";
 }

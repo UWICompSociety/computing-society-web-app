@@ -7,7 +7,10 @@ import controllers.utils.EntityController;
 import models.user_management.User;
 import play.libs.Json;
 import play.mvc.BodyParser;
+import play.mvc.Http;
 import play.mvc.Result;
+import play.mvc.Security;
+import services.security.Secured;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,44 +21,30 @@ import java.util.Map;
 public class SessionCtrl extends EntityController {
 
     /**
-     * Helper
-     *
-     * @return
-     */
-    @BodyParser.Of(BodyParser.Json.class)
-    private Map<String, String> credentialsFromRequest() {
-        JsonNode request = request().body().asJson();
-
-        Map<String, String> credentials = new HashMap<String, String>();
-
-        String email = request.findPath("email").asText();
-        String username = request.findPath("username").asText("");
-        String password = request.findPath("password").asText();
-
-        credentials.put("email", email);
-        credentials.put("username", username);
-        credentials.put("password", password);
-
-        return credentials;
-    }
-
-    /**
      * Authenticates user and if successful, returns their token
+     *
      * @return
      */
     public Result authenticate() {
         Map<String, String> credentials = credentialsFromRequest();
         String email = credentials.get("email");
 
-        User user = User.find.where().eq("email", email).findUnique();
+        User user = User.findByEmail(credentials.get("email"));
 
-        if (user == null)
-            return ok(Json.toJson("User Not found"));
-        if (!user.verified)
-            return ok(Json.toJson("Not verified"));
+        if (null == user)
+            return unauthorized();
 
-        session("email", email);
-        return ok(Json.toJson(user));
+        String token = user.getToken();
+
+        if (!user.isVerified() || 0 == token.length())
+            return ok(Json.toJson("token-absent"));
+
+        response().setCookie(AUTH_TOKEN, token);
+
+        ObjectNode result = Json.newObject();
+        result.put("token", token);
+
+        return ok(result);
     }
 
     /**
@@ -68,7 +57,7 @@ public class SessionCtrl extends EntityController {
         String email = credentials.get("email");
 
         if (User.isEmailTaken(email))
-            return ok(Json.toJson("Email already in use"));
+            return ok(Json.toJson("email-taken"));
 
         User user = User.register(
                 email,
@@ -76,17 +65,10 @@ public class SessionCtrl extends EntityController {
                 credentials.get("password")
         );
 
-        user.save();
-
-        session("email", email);
-
-        return ok(Json.toJson(user));
-    }
-
-    public Result index() {
-
-
-        return ok();
+        ObjectNode result = Json.newObject();
+        result.put("token", user.generateToken());
+        response().setCookie(AUTH_TOKEN, user.getToken());
+        return ok(result);
     }
 
     public Result show() {
@@ -105,17 +87,46 @@ public class SessionCtrl extends EntityController {
 
 
         ObjectNode result = Json.newObject();
+
         result.pojoNode(user);
 
         return ok(result);
     }
 
+    /**
+     * Logout
+     *
+     * @return
+     */
+    @Security.Authenticated(Secured.class)
     public Result destroy() {
-        session().remove("email");
+        response().discardCookie(AUTH_TOKEN);
+        getUser().deleteToken();
         return ok(Json.toJson("Logged out"));
     }
-    // create
-    // show
-    // index
-    //
+
+    ////////////////////////////////////////////////////////////////
+    //          HELPERS
+    ////////////////////////////////////////////////////////////////
+
+    public User getUser() {
+        return (User) Http.Context.current().args.get("user");
+    }
+
+    @BodyParser.Of(BodyParser.Json.class)
+    private Map<String, String> credentialsFromRequest() {
+        JsonNode request = request().body().asJson();
+
+        Map<String, String> credentials = new HashMap<String, String>();
+
+        String email = request.findPath("email").asText();
+        String username = request.findPath("username").asText("");
+        String password = request.findPath("password").asText();
+
+        credentials.put("email", email);
+        credentials.put("username", username);
+        credentials.put("password", password);
+
+        return credentials;
+    }
 }

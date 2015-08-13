@@ -36,6 +36,6 @@ public class Secured extends Security.Authenticator {
 
     @Override
     public Result onUnauthorized(Http.Context context) {
-        return ok(Json.toJson("invalid-token"))
+        return ok(Json.toJson("invalid-token"));
     }
 }
