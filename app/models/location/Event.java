@@ -1,6 +1,7 @@
 package models.location;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import controllers.utils.EntityController;
 import play.data.validation.Constraints;
 
@@ -23,12 +24,17 @@ public class Event extends EntityController {
     public Date startTime;
     public Date endTime;
 
+    // change to enum -> 'planning', 'started', 'cancelled', etc
+    public String status;
+
     public int rating;
 
     // OneToMany vs OneToOne in the off chance it moves or is large enough to span multiple locations
+    @JsonIgnore
     @OneToMany(mappedBy = "event")
     public List<EventPlace> places;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "event")
     public List<EventUser> attendees;
 }

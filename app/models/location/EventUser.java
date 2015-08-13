@@ -1,5 +1,6 @@
 package models.location;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.user_management.User;
 import models.utils.BaseModel;
 
@@ -12,9 +13,13 @@ import javax.persistence.ManyToOne;
 @Entity
 public class EventUser extends BaseModel {
 
+    public static Finder<Long, EventUser> find = new Finder<>(EventUser.class);
+
+    @JsonIgnore
     @ManyToOne
     public User user;
 
+    @JsonIgnore
     @ManyToOne
     public Event event;
 

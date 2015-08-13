@@ -9,6 +9,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -19,13 +20,12 @@ public class User extends BaseEntity {
 
     public static Finder<Long, User> find = new Finder<>(User.class);
 
-    public String username;
-
     @Constraints.Required
     public String email;
 
+    public String token;
+    public String username;
     public String password;
-
     public boolean verified = false;
 
     @JsonIgnore
@@ -43,16 +43,27 @@ public class User extends BaseEntity {
         this.verified = verified;
     }
 
+
     public static User createMember(String email) {
         return new User(email, null, null, false);
     }
 
-    public static boolean isEmailTaken(String email) {
-        return User.find.where().eq("email", email).findUnique() != null;
-    }
 
     public static User register(String email, String username, String password) {
         return new User(email, username, password, false);
+    }
+
+    public static User findByToken(String token) {
+        return token.isEmpty() ? null : find.where().eq("token", token).findUnique();
+    }
+
+    public static User findByEmail(String email) {
+        return email.isEmpty() ? null : find.where().eq("email", email).findUnique();
+    }
+
+    // Helpers
+    public static boolean isEmailTaken(String email) {
+        return User.find.where().eq("email", email).findUnique() != null;
     }
 
     public List<Role> getAllRoles() {
@@ -79,5 +90,73 @@ public class User extends BaseEntity {
 
     public boolean isVerified() {
         return this.verified;
+    }
+
+    public String generateToken() {
+        token = UUID.randomUUID().toString();
+        save();
+        return token;
+    }
+
+    public void deleteToken() {
+        token = null;
+        save();
+    }
+
+
+
+    ////////////////////////////////////////////////////////////////
+    //              GETTERS AND SETTERS
+    ////////////////////////////////////////////////////////////////
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
+    public List<RoleUser> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RoleUser> roles) {
+        this.roles = roles;
     }
 }

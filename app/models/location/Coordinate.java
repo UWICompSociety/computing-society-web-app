@@ -13,6 +13,8 @@ import javax.persistence.OneToOne;
 @Entity
 public class Coordinate extends BaseEntity {
 
+    public static Finder<Long, Coordinate> find = new Finder<>(Coordinate.class);
+
     @Constraints.Required
     public double latitude;
 

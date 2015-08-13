@@ -13,6 +13,8 @@ import javax.persistence.OneToOne;
 @Entity
 public class Address extends BaseEntity {
 
+    public static Finder<Long, Address> find = new Finder<>(Address.class);
+
     @JsonIgnore
     @OneToOne
     public Coordinate coordinate;
@@ -22,6 +24,6 @@ public class Address extends BaseEntity {
     public Profile profile;
 
     @JsonIgnore
-    @OneToOne
+    @OneToOne(mappedBy = "address")
     public Place place;
 }

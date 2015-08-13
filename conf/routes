@@ -16,7 +16,6 @@ GET         /api/session                               @controllers.api.SessionC
 GET         /api/users                                 @controllers.api.UsersCtrl.index()
 GET         /api/users/:id                             @controllers.api.UsersCtrl.show(id: Long)
 
-
 # ===================================================== Member =====================================================
 GET         /api/members                               @controllers.api.MembersCtrl.index()
 GET         /api/members/:id                           @controllers.api.MembersCtrl.show(id: Long)
@@ -26,6 +25,11 @@ POST        /api/members                               @controllers.api.MembersC
 GET         /api/members/:id/contributions             @controllers.api.ContributionsCtrl.index(id: Long)
 GET         /api/members/:id/contributions/:num        @controllers.api.ContributionsCtrl.show(id: Long, num: Integer)
 POST        /api/members/:id/contributions              @controllers.api.ContributionsCtrl.store(id: Long)
+
+# ===================================================== Places =====================================================
+# add paging options for results
+GET         /api/places                                 @controllers.api.PlacesCtrl.index()
+
 
 # Angular routes
 GET         /templates/*file                           controllers.Assets.versioned(path="/public/app/templates", file: Asset)

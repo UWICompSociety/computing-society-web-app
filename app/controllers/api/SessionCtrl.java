@@ -39,6 +39,10 @@ public class SessionCtrl extends EntityController {
         return credentials;
     }
 
+    /**
+     * Authenticates user and if successful, returns their token
+     * @return
+     */
     public Result authenticate() {
         Map<String, String> credentials = credentialsFromRequest();
         String email = credentials.get("email");

@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 @Entity
 public class RoleUser extends BaseModel {
 
+    public static Finder<Long, RoleUser> find = new Finder<>(RoleUser.class);
+
     @JsonIgnore
     @ManyToOne
     public Role role;
