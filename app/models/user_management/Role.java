@@ -33,4 +33,9 @@ public class Role extends BaseEntity {
     public Role(String name) {
         this(name, null);
     }
+
+
+    public static Role findByName(String name) {
+        return Role.find.where().eq("name", name).findUnique();
+    }
 }

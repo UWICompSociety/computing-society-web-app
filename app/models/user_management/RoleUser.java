@@ -22,4 +22,21 @@ public class RoleUser extends BaseModel {
     @JsonIgnore
     @ManyToOne
     public User user;
+
+    public RoleUser() {}
+
+    public RoleUser(User addUser, Role addRole) {
+        user = addUser;
+        role = addRole;
+    }
+
+    public static RoleUser newIntance(){
+        return new RoleUser();
+    }
+
+    public static RoleUser createRelation(User user, Role role) {
+        RoleUser relation = new RoleUser(user, role);
+        relation.save();
+        return relation;
+    }
 }
