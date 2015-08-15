@@ -3,13 +3,12 @@ package controllers.api;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import controllers.utils.EntityController;
 import models.contribution.Contribution;
 import models.user_management.Profile;
 import models.user_management.User;
-import play.Logger;
 import play.libs.Json;
 import play.mvc.BodyParser;
+import play.mvc.Controller;
 import play.mvc.Result;
 
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.List;
 /**
  * Created by shane on 8/9/15.
  */
-public class ContributionsCtrl extends EntityController {
+public class ContributionsCtrl extends Controller {
 
     @BodyParser.Of(BodyParser.Json.class)
     public Result store(long id) {

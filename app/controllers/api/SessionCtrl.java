@@ -2,16 +2,10 @@ package controllers.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import controllers.utils.BaseController;
-import controllers.utils.EntityController;
 import models.user_management.Profile;
 import models.user_management.User;
 import play.libs.Json;
-import play.mvc.BodyParser;
-import play.mvc.Http;
-import play.mvc.Result;
-import play.mvc.Security;
-import services.security.Secured;
+import play.mvc.*;
 import services.util.Constants;
 
 import java.util.HashMap;
@@ -20,13 +14,14 @@ import java.util.Map;
 /**
  * Created by shane on 8/7/15.
  */
-public class SessionCtrl extends EntityController {
+public class SessionCtrl extends Controller {
 
     /**
      * Authenticates user and if successful, returns their token
      *
      * @return
      */
+    @BodyParser.Of(BodyParser.Json.class)
     public Result authenticate() {
         Map<String, String> credentials = credentialsFromRequest();
         String email = credentials.get("email");
@@ -41,7 +36,7 @@ public class SessionCtrl extends EntityController {
         if (!user.isVerified() || 0 == token.length())
             return ok(Json.toJson("token-absent"));
 
-        response().setCookie(AUTH_TOKEN, token);
+        response().setCookie(Constants.AUTH_TOKEN, token);
 
         ObjectNode result = Json.newObject();
         result.put("token", token);
@@ -90,11 +85,11 @@ public class SessionCtrl extends EntityController {
 
         ObjectNode result = Json.newObject();
         result.put("token", user.generateToken());
-        response().setCookie(AUTH_TOKEN, user.getToken());
+        response().setCookie(Constants.AUTH_TOKEN, user.getToken());
         return ok(result);
     }
 
-    @Security.Authenticated(Secured.class)
+//    @Security.Authenticated(Secured.class)
     public Result show() {
         String email = session().get("email");
 
@@ -122,9 +117,9 @@ public class SessionCtrl extends EntityController {
      *
      * @return
      */
-    @Security.Authenticated(Secured.class)
+//    @Security.Authenticated(Secured.class)
     public Result destroy() {
-        response().discardCookie(AUTH_TOKEN);
+        response().discardCookie(Constants.AUTH_TOKEN);
         getUser().deleteToken();
         return ok(Json.toJson("Logged out"));
     }

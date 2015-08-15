@@ -3,8 +3,6 @@ package controllers.api;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import controllers.utils.EntityController;
 import models.user_management.Profile;
 import models.user_management.User;
 import play.Logger;
@@ -16,7 +14,7 @@ import java.util.List;
 /**
  * Created by shane on 8/6/15.
  */
-public class MembersCtrl extends EntityController {
+public class MembersCtrl extends Controller {
 
     /**
      * Used when a admin is creating a user

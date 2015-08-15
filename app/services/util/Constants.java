@@ -11,6 +11,9 @@ public class Constants {
 
     public static final String EMPTY_STRING = "";
 
+    public static final String AUTH_TOKEN_HEADER = "X-AUTH-TOKEN";
+    public static final String AUTH_TOKEN = "token";
+
     public static final String KEY_REG_NO = "registration_number";
 
     public static final String KEY_USERNAME = "username";

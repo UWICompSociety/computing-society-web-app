@@ -2,9 +2,9 @@ package controllers.api;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import controllers.utils.EntityController;
 import models.user_management.User;
 import play.libs.Json;
+import play.mvc.Controller;
 import play.mvc.Result;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by shane on 8/9/15.
  */
-public class UsersCtrl extends EntityController {
+public class UsersCtrl extends Controller {
 
     public Result index() {
         ArrayNode results = new ArrayNode(JsonNodeFactory.instance);
