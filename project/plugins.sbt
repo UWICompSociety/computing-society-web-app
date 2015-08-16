@@ -3,7 +3,7 @@ addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.4.2")
 
 // Heroku
 resolvers += Resolver.url("heroku-sbt-plugin-releases", url("http://dl.bintray.com/heroku/sbt-plugins/"))(Resolver.ivyStylePatterns)
-addSbtPlugin("com.heroku" % "sbt-heroku" % "0.4.4")
+addSbtPlugin("com.heroku" % "sbt-heroku" % "0.4.3")
 
 // Web plugins
 addSbtPlugin("com.typesafe.sbt" % "sbt-coffeescript" % "1.0.0")
