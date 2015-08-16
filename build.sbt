@@ -2,7 +2,7 @@ name := """ComputingSociety"""
 
 version := "1.0-SNAPSHOT"
 
-//Compile := "ComputingSociety"
+Compile := "ComputingSociety"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
 
