@@ -1,6 +1,7 @@
-package models.location;
+package models.event;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import models.location.Place;
 import models.utils.BaseModel;
 
 import javax.persistence.Entity;

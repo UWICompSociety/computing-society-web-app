@@ -1,4 +1,4 @@
-package models.location;
+package models.event;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.user_management.User;

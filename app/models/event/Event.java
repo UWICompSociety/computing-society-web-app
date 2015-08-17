@@ -1,6 +1,5 @@
-package models.location;
+package models.event;
 
-import com.avaje.ebean.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.utils.BaseEntity;
 import play.data.format.Formats;
@@ -17,7 +16,7 @@ import java.util.List;
 @Entity
 public class Event extends BaseEntity {
 
-    public static Model.Finder<Long, Event> find = new Model.Finder<>(Event.class);
+    public static Finder<Long, Event> find = new Finder<>(Event.class);
 
     @Constraints.Required
     public String name;
@@ -41,4 +40,8 @@ public class Event extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "event")
     public List<EventUser> attendees;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "event")
+    public List<EventType> types;
 }

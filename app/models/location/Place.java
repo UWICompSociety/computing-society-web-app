@@ -1,6 +1,7 @@
 package models.location;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import models.event.EventPlace;
 import models.utils.BaseEntity;
 import play.data.validation.Constraints;
 
