@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.utils.BaseEntity;
 import play.data.validation.Constraints;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -17,6 +14,7 @@ import java.util.stream.Collectors;
  * Created by shane on 8/6/15.
  */
 @Entity
+@Table(name = "users")
 public class User extends BaseEntity {
 
     public static Finder<Long, User> find = new Finder<>(User.class);
