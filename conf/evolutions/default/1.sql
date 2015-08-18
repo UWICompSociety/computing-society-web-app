@@ -111,7 +111,7 @@ create table type (
   constraint pk_type primary key (id))
 ;
 
-create table user (
+create table users (
   id                        bigint auto_increment not null,
   deleted                   tinyint(1) default 0,
   email                     varchar(255) not null,
@@ -119,7 +119,7 @@ create table user (
   username                  varchar(255),
   password                  varchar(255),
   verified                  tinyint(1) default 0,
-  constraint pk_user primary key (id))
+  constraint pk_users primary key (id))
 ;
 
 alter table address add constraint fk_address_coordinate_1 foreign key (coordinate_id) references coordinate (id) on delete restrict on update restrict;
@@ -134,19 +134,19 @@ alter table event_type add constraint fk_event_type_type_5 foreign key (type_id)
 create index ix_event_type_type_5 on event_type (type_id);
 alter table event_type add constraint fk_event_type_event_6 foreign key (event_id) references event (id) on delete restrict on update restrict;
 create index ix_event_type_event_6 on event_type (event_id);
-alter table event_user add constraint fk_event_user_user_7 foreign key (user_id) references user (id) on delete restrict on update restrict;
+alter table event_user add constraint fk_event_user_user_7 foreign key (user_id) references users (id) on delete restrict on update restrict;
 create index ix_event_user_user_7 on event_user (user_id);
 alter table event_user add constraint fk_event_user_event_8 foreign key (event_id) references event (id) on delete restrict on update restrict;
 create index ix_event_user_event_8 on event_user (event_id);
 alter table place add constraint fk_place_address_9 foreign key (address_id) references address (id) on delete restrict on update restrict;
 create index ix_place_address_9 on place (address_id);
-alter table profile add constraint fk_profile_user_10 foreign key (user_id) references user (id) on delete restrict on update restrict;
+alter table profile add constraint fk_profile_user_10 foreign key (user_id) references users (id) on delete restrict on update restrict;
 create index ix_profile_user_10 on profile (user_id);
 alter table profile add constraint fk_profile_address_11 foreign key (address_id) references address (id) on delete restrict on update restrict;
 create index ix_profile_address_11 on profile (address_id);
 alter table role_user add constraint fk_role_user_role_12 foreign key (role_id) references role (id) on delete restrict on update restrict;
 create index ix_role_user_role_12 on role_user (role_id);
-alter table role_user add constraint fk_role_user_user_13 foreign key (user_id) references user (id) on delete restrict on update restrict;
+alter table role_user add constraint fk_role_user_user_13 foreign key (user_id) references users (id) on delete restrict on update restrict;
 create index ix_role_user_user_13 on role_user (user_id);
 
 
@@ -179,7 +179,7 @@ drop table role_user;
 
 drop table type;
 
-drop table user;
+drop table users;
 
 SET FOREIGN_KEY_CHECKS=1;
 
