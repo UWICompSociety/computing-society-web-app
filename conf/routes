@@ -13,7 +13,7 @@ GET         /api/logout                                @controllers.api.SessionC
 GET         /api/session                               @controllers.api.SessionCtrl.show()
 
 # ===================================================== Users =====================================================
-GET         /api/users                                 @controllers.api.UsersCtrl.index()
+GET         /api/users                                 @controllers.api.UsersCtrl.index(role)
 GET         /api/users/:id                             @controllers.api.UsersCtrl.show(id: Long)
 
 # ===================================================== Member =====================================================
@@ -29,6 +29,13 @@ POST        /api/members/:id/contributions             @controllers.api.Contribu
 # ===================================================== Places =====================================================
 # add paging options for results
 GET         /api/places                                @controllers.api.PlacesCtrl.index()
+
+# ===================================================== Admin =====================================================
+
+
+# ===================================================== Test =====================================================
+# replace this with an initialize sql script for tables
+GET         /test/users                                 @controllers.TestCtrl.users()
 
 
 # Angular routes

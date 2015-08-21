@@ -14,10 +14,18 @@ import java.util.List;
  */
 public class UsersCtrl extends Controller {
 
-    public Result index() {
+    public Result index(String role) {
         ArrayNode results = new ArrayNode(JsonNodeFactory.instance);
+        List<User> users;
 
-        List<User> users = User.find.all();
+        if (null == role)
+            users = User.find.all();
+        else
+            users = User.find.select("*")
+                    .fetch("roles")
+                    .where()
+                    .eq("roles.name", role)
+                    .findList();
 
         // filter verified
         for (User user: users)

@@ -49,6 +49,10 @@ public class User extends BaseEntity {
         return new User(email, null, null, false);
     }
 
+    public static User createUser(String email, String username, String password) {
+
+        return new User(email, username, password, false);
+    }
 
     public static User register(String email, String username, String password) {
         return new User(email, username, password, false);
