@@ -3,6 +3,8 @@ package controllers;
 import com.avaje.ebean.Model;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import models.user_management.Profile;
 import models.user_management.Role;
 import models.user_management.RoleUser;
 import models.user_management.User;
@@ -18,20 +20,18 @@ import java.util.List;
  * Created by shane on 8/21/15.
  */
 public class TestCtrl extends Controller {
+    public Result test(){
+        ObjectNode result = Json.newObject();
+        if (Role.find.all().size() <= 0)
+            generateRoles();
+        if (User.find.all().size() <= 0) {
+            List<User> users = generateUsers();
+            generateProfiles(users);
+        }
 
-    public Result roles() {
-        ArrayNode results = new ArrayNode(JsonNodeFactory.instance);
-        List<Role> roles = Role.find.all();
+        result.put("status", "Success");
 
-        if (roles != Collections.EMPTY_LIST)
-            return ok("roles already added");
-
-        roles = generateRoles();
-
-        for (Role role: roles)
-            results.add(Json.toJson(role));
-
-        return ok(results);
+        return ok(result);
     }
 
     private List<Role> generateRoles() {
@@ -47,32 +47,24 @@ public class TestCtrl extends Controller {
         return roles;
     }
 
-    public Result users() {
-        ArrayNode results = new ArrayNode(JsonNodeFactory.instance);
-        List<User> users = User.find.all();
-        List<Role> roles = Role.find.all();
+    private void generateProfiles(List<User> users) {
+        List<Profile> profiles = new ArrayList<>();
 
-        if (users != Collections.EMPTY_LIST)
-            return ok("Already has data");
+        profiles.add(new Profile.Builder("antonio")
+                .lastName("fearon")
+                .build());
+        profiles.add(new Profile.Builder("shane")
+                .lastName("richards")
+                .registrationNumber("620065739")
+                .build());
+        profiles.add(new Profile.Builder("jordan")
+                .lastName("northover")
+                .build());
 
-        if (roles != Collections.EMPTY_LIST)
-            roles = generateRoles();
-
-        users = generateUsers();
-
-        RoleUser.createRelation(users.get(0), roles.get(0)).save();
-        RoleUser.createRelation(users.get(1), roles.get(0)).save();
-        RoleUser.createRelation(users.get(2), roles.get(0)).save();
-
-        RoleUser.createRelation(users.get(0), roles.get(1)).save();
-        RoleUser.createRelation(users.get(1), roles.get(1)).save();
-
-        RoleUser.createRelation(users.get(0), roles.get(2)).save();
-        RoleUser.createRelation(users.get(1), roles.get(2)).save();
-
-        for (User user: users)
-            results.add(Json.toJson(user));
-        return ok(results);
+        for (int i = 0; i < profiles.size(); i++){
+            profiles.get(i).user = users.get(i);
+            profiles.get(i).save();
+        }
     }
 
     private List<User> generateUsers(){
@@ -82,8 +74,9 @@ public class TestCtrl extends Controller {
         users.add(User.createUser("shane.richards121@gmail.com", "shadow", "password"));
         users.add(User.createUser("jnoth@gmail.com", "jnorth", "password"));
 
-        for (User user: users)
-            user.save();
+        for (User user: users) {
+            user.generateToken();
+        }
 
         return users;
     }

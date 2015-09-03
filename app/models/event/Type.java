@@ -19,6 +19,7 @@ public class Type extends BaseModel {
     @Constraints.Required
     public String name;
 
+
     @JsonIgnore
     @OneToMany(mappedBy = "type")
     public List<EventType> events;

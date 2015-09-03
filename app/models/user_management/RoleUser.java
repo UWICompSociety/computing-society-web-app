@@ -23,6 +23,8 @@ public class RoleUser extends BaseModel {
     @ManyToOne
     public User user;
 
+    public String description;
+
     public RoleUser() {}
 
     public RoleUser(User addUser, Role addRole) {

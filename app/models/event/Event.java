@@ -28,7 +28,7 @@ public class Event extends BaseEntity {
     public Date endTime;
 
     // change to enum -> 'planning', 'started', 'cancelled', etc
-    public String status;
+//    public String status;
 
     public int rating;
 

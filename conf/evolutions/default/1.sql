@@ -4,43 +4,50 @@
 # --- !Ups
 
 create table address (
-  id                        bigint auto_increment not null,
-  deleted                   tinyint(1) default 0,
+  id                        bigint not null,
+  deleted                   boolean,
+  created_at                timestamp,
+  updated_at                timestamp,
   coordinate_id             bigint,
   constraint uq_address_coordinate_id unique (coordinate_id),
   constraint pk_address primary key (id))
 ;
 
 create table contribution (
-  id                        bigint auto_increment not null,
-  deleted                   tinyint(1) default 0,
+  id                        bigint not null,
+  deleted                   boolean,
+  created_at                timestamp,
+  updated_at                timestamp,
   amount                    integer,
   profile_id                bigint,
   constraint pk_contribution primary key (id))
 ;
 
 create table coordinate (
-  id                        bigint auto_increment not null,
-  deleted                   tinyint(1) default 0,
+  id                        bigint not null,
+  deleted                   boolean,
+  created_at                timestamp,
+  updated_at                timestamp,
   latitude                  double,
   longitude                 double,
   constraint pk_coordinate primary key (id))
 ;
 
 create table event (
-  id                        bigint auto_increment not null,
-  deleted                   tinyint(1) default 0,
+  id                        bigint not null,
+  deleted                   boolean,
+  created_at                timestamp,
+  updated_at                timestamp,
   name                      varchar(255),
-  start_time                datetime(6),
-  end_time                  datetime(6),
-  status                    varchar(255),
+  start_time                timestamp,
+  end_time                  timestamp,
   rating                    integer,
   constraint pk_event primary key (id))
 ;
 
 create table event_place (
-  id                        bigint auto_increment not null,
-  deleted                   tinyint(1) default 0,
+  id                        bigint not null,
+  deleted                   boolean,
   event_id                  bigint,
   place_id                  bigint,
   description               varchar(255),
@@ -48,16 +55,16 @@ create table event_place (
 ;
 
 create table event_type (
-  id                        bigint auto_increment not null,
-  deleted                   tinyint(1) default 0,
+  id                        bigint not null,
+  deleted                   boolean,
   type_id                   bigint,
   event_id                  bigint,
   constraint pk_event_type primary key (id))
 ;
 
 create table event_user (
-  id                        bigint auto_increment not null,
-  deleted                   tinyint(1) default 0,
+  id                        bigint not null,
+  deleted                   boolean,
   user_id                   bigint,
   event_id                  bigint,
   description               varchar(255),
@@ -65,22 +72,26 @@ create table event_user (
 ;
 
 create table place (
-  id                        bigint auto_increment not null,
-  deleted                   tinyint(1) default 0,
+  id                        bigint not null,
+  deleted                   boolean,
+  created_at                timestamp,
+  updated_at                timestamp,
   name                      varchar(255),
-  short_name                varchar(255),
   address_id                bigint,
   constraint uq_place_address_id unique (address_id),
   constraint pk_place primary key (id))
 ;
 
 create table profile (
-  id                        bigint auto_increment not null,
-  deleted                   tinyint(1) default 0,
+  id                        bigint not null,
+  deleted                   boolean,
+  created_at                timestamp,
+  updated_at                timestamp,
   first_name                varchar(255),
   last_name                 varchar(255),
   registration_number       varchar(255),
-  birthday                  datetime(6),
+  nickname                  varchar(255),
+  birthday                  timestamp,
   user_id                   bigint,
   address_id                bigint,
   constraint uq_profile_user_id unique (user_id),
@@ -89,38 +100,69 @@ create table profile (
 ;
 
 create table role (
-  id                        bigint auto_increment not null,
-  deleted                   tinyint(1) default 0,
+  id                        bigint not null,
+  deleted                   boolean,
+  created_at                timestamp,
+  updated_at                timestamp,
   name                      varchar(255),
   description               varchar(255),
   constraint pk_role primary key (id))
 ;
 
 create table role_user (
-  id                        bigint auto_increment not null,
-  deleted                   tinyint(1) default 0,
+  id                        bigint not null,
+  deleted                   boolean,
   role_id                   bigint,
   user_id                   bigint,
+  description               varchar(255),
   constraint pk_role_user primary key (id))
 ;
 
 create table type (
-  id                        bigint auto_increment not null,
-  deleted                   tinyint(1) default 0,
+  id                        bigint not null,
+  deleted                   boolean,
   name                      varchar(255),
   constraint pk_type primary key (id))
 ;
 
 create table users (
-  id                        bigint auto_increment not null,
-  deleted                   tinyint(1) default 0,
+  id                        bigint not null,
+  deleted                   boolean,
+  created_at                timestamp,
+  updated_at                timestamp,
   email                     varchar(255) not null,
   token                     varchar(255),
   username                  varchar(255),
   password                  varchar(255),
-  verified                  tinyint(1) default 0,
+  verified                  boolean,
   constraint pk_users primary key (id))
 ;
+
+create sequence address_seq;
+
+create sequence contribution_seq;
+
+create sequence coordinate_seq;
+
+create sequence event_seq;
+
+create sequence event_place_seq;
+
+create sequence event_type_seq;
+
+create sequence event_user_seq;
+
+create sequence place_seq;
+
+create sequence profile_seq;
+
+create sequence role_seq;
+
+create sequence role_user_seq;
+
+create sequence type_seq;
+
+create sequence users_seq;
 
 alter table address add constraint fk_address_coordinate_1 foreign key (coordinate_id) references coordinate (id) on delete restrict on update restrict;
 create index ix_address_coordinate_1 on address (coordinate_id);
@@ -153,33 +195,59 @@ create index ix_role_user_user_13 on role_user (user_id);
 
 # --- !Downs
 
-SET FOREIGN_KEY_CHECKS=0;
+SET REFERENTIAL_INTEGRITY FALSE;
 
-drop table address;
+drop table if exists address;
 
-drop table contribution;
+drop table if exists contribution;
 
-drop table coordinate;
+drop table if exists coordinate;
 
-drop table event;
+drop table if exists event;
 
-drop table event_place;
+drop table if exists event_place;
 
-drop table event_type;
+drop table if exists event_type;
 
-drop table event_user;
+drop table if exists event_user;
 
-drop table place;
+drop table if exists place;
 
-drop table profile;
+drop table if exists profile;
 
-drop table role;
+drop table if exists role;
 
-drop table role_user;
+drop table if exists role_user;
 
-drop table type;
+drop table if exists type;
 
-drop table users;
+drop table if exists users;
 
-SET FOREIGN_KEY_CHECKS=1;
+SET REFERENTIAL_INTEGRITY TRUE;
+
+drop sequence if exists address_seq;
+
+drop sequence if exists contribution_seq;
+
+drop sequence if exists coordinate_seq;
+
+drop sequence if exists event_seq;
+
+drop sequence if exists event_place_seq;
+
+drop sequence if exists event_type_seq;
+
+drop sequence if exists event_user_seq;
+
+drop sequence if exists place_seq;
+
+drop sequence if exists profile_seq;
+
+drop sequence if exists role_seq;
+
+drop sequence if exists role_user_seq;
+
+drop sequence if exists type_seq;
+
+drop sequence if exists users_seq;
 

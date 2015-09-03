@@ -26,7 +26,7 @@ public class Profile extends BaseEntity {
 
     public String lastName;
     public String registrationNumber;
-//    public String nickname;
+    public String nickname;
 
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     public Date birthday;

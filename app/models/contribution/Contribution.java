@@ -7,6 +7,7 @@ import play.data.validation.Constraints;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import java.util.Date;
 
 /**
  * Created by shane on 8/9/15.

@@ -26,7 +26,9 @@ public class SessionCtrl extends Controller {
         Map<String, String> credentials = credentialsFromRequest();
         String email = credentials.get("email");
 
+        // try to find the user
         User user = User.findByEmail(credentials.get("email"));
+
 
         if (null == user)
             return unauthorized();
@@ -86,6 +88,7 @@ public class SessionCtrl extends Controller {
         ObjectNode result = Json.newObject();
         result.put("token", user.generateToken());
         response().setCookie(Constants.AUTH_TOKEN, user.getToken());
+
         return ok(result);
     }
 
@@ -138,9 +141,9 @@ public class SessionCtrl extends Controller {
 
         Map<String, String> credentials = new HashMap<String, String>();
 
-        String email = request.findPath("email").asText();
-        String username = request.findPath("username").asText("");
-        String password = request.findPath("password").asText();
+        String email = request.findPath("email").asText(Constants.EMPTY_STRING);
+        String username = request.findPath("username").asText(Constants.EMPTY_STRING);
+        String password = request.findPath("password").asText(Constants.EMPTY_STRING);
 
         credentials.put("email", email);
         credentials.put("password", password);

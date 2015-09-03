@@ -2,12 +2,16 @@ package models.utils;
 
 import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
+import java.util.Date;
 
 /**
  * Created by shane on 8/6/15.
  */
 @MappedSuperclass
 public class BaseEntity extends BaseModel {
+
+    public Date createdAt;
+    public Date updatedAt;
 
     @Override
     public void save() {

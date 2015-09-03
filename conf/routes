@@ -35,8 +35,7 @@ GET         /api/places                                @controllers.api.PlacesCt
 
 # ===================================================== Test =====================================================
 # replace this with an initialize sql script for tables
-GET         /test/users                                 @controllers.TestCtrl.users()
-
+GET         /test                                       @controllers.TestCtrl.test()
 
 # Angular routes
 GET         /templates/*file                           controllers.Assets.versioned(path="/public/app/templates", file: Asset)

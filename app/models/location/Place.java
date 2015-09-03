@@ -21,7 +21,7 @@ public class Place extends BaseEntity {
     @Constraints.Required
     public String name;
 
-    public String shortName;
+
 
     @JsonIgnore
     @OneToOne
