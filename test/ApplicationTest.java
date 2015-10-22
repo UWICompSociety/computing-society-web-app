@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import controllers.Application;
 import org.junit.*;
 
 import play.mvc.*;
@@ -26,7 +27,7 @@ import static org.junit.Assert.*;
 * If you are interested in mocking a whole application, see the wiki for more details.
 *
 */
-public class ApplicationTest {
+public class ApplicationTest extends WithApplication {
 
     @Test
     public void simpleCheck() {
@@ -35,11 +36,12 @@ public class ApplicationTest {
     }
 
     @Test
-    public void renderTemplate() {
-        Content html = views.html.index.render("Your new application is ready.");
-        assertEquals("text/html", contentType(html));
-        assertTrue(contentAsString(html).contains("Your new application is ready."));
+    public void testIndex() {
+        Application applicationCtrl = new Application();
+        Result result = applicationCtrl.index();
+        assertEquals(OK, result.status());
+        assertEquals("text/plain", result.contentType());
+        assertEquals("utf-8", result.charset());
+        assertTrue(contentAsString(result).contains("Hello World"));
     }
-
-
 }
