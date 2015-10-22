@@ -1,4 +1,20 @@
-This is your new Play application
-=================================
+# UWI Mona Computing Society's Website
 
-This file will be packaged with your application, when using `activator dist`.
+### Overview
+The Computing Society's web app is intended to be a platform for current and prospective members to disemminat (fix this word) information related to the society. 
+
+### About the project
+This is repository contains the source code for the Computing Society's website. The application implemented primarily in Java and is built atop the Play! Framework. This makes it a great opportunity for members to learn about web application development
+
+### How to contribute
+Computing Society's members who are interested in contributing to the repositories should ...
+
+### Main Features
+These are the primary functionality provided be the app.
+1. Member accounts
+2. Blog
+2. A restricted RESTful API
+
+### Prospective Features
+1. Further securing the API and provide external acess.
+2. Show partners and conglomerate groups
